@@ -25,9 +25,11 @@ class BillingCycleList extends Component {
       <div>
         <table className='table'>
           <thead>
-            <th>Nome</th>
-            <th>Mês</th>
-            <th>Ano</th>
+            <tr>
+              <th>Nome</th>
+              <th>Mês</th>
+              <th>Ano</th>
+            </tr>
           </thead>
           <tbody>
             {this.renderRows()}
