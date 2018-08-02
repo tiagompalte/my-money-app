@@ -1,12 +1,15 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
+import formatCurrency from 'format-currency'
 
 import { getSummary } from './dashboardActions'
 import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
 import ValueBox from '../common/widget/valueBox'
 import Row from '../common/layout/row'
+
+const opts = { format: '%s %v', locale:'pt-BR', symbol: 'R$'}
 
 class Dashboard extends Component {
 
@@ -22,11 +25,11 @@ class Dashboard extends Component {
         <Content>
           <Row>
             <ValueBox cols='12 4' color='green' icon='bank'
-                        value={`R$ ${credit}`} text='Total de Créditos' />
+                        value={`${formatCurrency(credit, opts)}`} text='Total de Créditos' />
             <ValueBox cols='12 4' color='red' icon='credit-card'
-                        value={`R$ ${debt}`} text='Total de Débitos' />
+                        value={`${formatCurrency(debt, opts)}`} text='Total de Débitos' />
             <ValueBox cols='12 4' color='blue' icon='money'
-                        value={`R$ ${credit - debt}`} text='Valor Consolidado' />
+                        value={`${formatCurrency(credit - debt, opts)}`} text='Valor Consolidado' />
           </Row>
         </Content>
       </div>
