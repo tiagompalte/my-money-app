@@ -8,10 +8,9 @@ export default function(state, action) {
     state = INITIAL_STATE
   }
 
-  switch(action.type) {
-    case Actions.BILLING_SUMMARY_FETCHED:
-      return {...state, summary: action.payload.data}
-    default:
-      return state
+  if(action.type === Actions.BILLING_SUMMARY_FETCHED) {
+    return {...state, summary: action.payload.data}
   }
+
+  return state
 }

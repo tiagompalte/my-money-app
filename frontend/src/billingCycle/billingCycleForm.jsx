@@ -5,13 +5,27 @@ import { reduxForm, Field, formValueSelector } from 'redux-form'
 
 import LabelAndInput from '../common/form/labelAndInput'
 import { init } from './billingCycleActions'
-import CreditList from './creditList'
+import ItemList from './itemList'
+import Summary from './summary'
 
 class BillingCycleForm extends Component {
 
+  calculateSummary() {
+
+    let credits = this.props.credits && this.props.credits.length > 0 ? this.props.credits : [{value: 0}]
+    let debts = this.props.debts && this.props.debts.length > 0 ? this.props.debts : [{value: 0}]
+
+    const sum = (t, v) => t + v 
+    return {
+      sumOfCredits: credits.map(c => +c.value || 0).reduce(sum),
+      sumOfDebts: debts.map(d => +d.value || 0).reduce(sum) 
+    }
+  }
+
   render() {
 
-    const { handleSubmit, readOnly, credits } = this.props
+    const { handleSubmit, readOnly, credits, debts } = this.props
+    const { sumOfCredits, sumOfDebts } = this.calculateSummary()
 
     return (
       <form role='form' onSubmit={handleSubmit}>
@@ -25,7 +39,13 @@ class BillingCycleForm extends Component {
           <Field name='year' component={LabelAndInput} type='number'
                   label='Ano' cols='12 4' placeholder='Informe o ano' readOnly={readOnly}
           />
-          <CreditList cols='12 6' list={credits} readOnly={readOnly} />
+          <Summary credit={sumOfCredits} debt={sumOfDebts} />
+          <ItemList cols='12 6' list={credits} readOnly={readOnly} 
+                    field='credits' legend='Créditos'
+          />
+          <ItemList cols='12 6' list={debts} readOnly={readOnly} 
+                    field='debts' legend='Débitos' showStatus={true}
+          />
         </div>
         <div className='box-footer'>
           <button type='submit' className={`btn btn-${this.props.submitClass}`}>
@@ -40,7 +60,10 @@ class BillingCycleForm extends Component {
 
 BillingCycleForm = reduxForm({form: 'billingCycleForm', destroyOnUnmount: false})(BillingCycleForm)
 const selector = formValueSelector('billingCycleForm')
-const mapStateToProps = state => ({credits: selector(state, 'credits')})
+const mapStateToProps = state => ({
+    credits: selector(state, 'credits'), 
+    debts: selector(state, 'debts')
+})
 const mapDispatchToProps = dispatch => bindActionCreators({init}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(BillingCycleForm)

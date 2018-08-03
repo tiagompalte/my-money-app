@@ -8,10 +8,9 @@ export default (state, action) => {
     state = INITIAL_STATE
   }
 
-  switch(action.type) {
-    case Actions.BILLING_CYCLES_FETCHED:
-      return { ...state, list: action.payload.data }
-    default:
-      return state
+  if(action.type === Actions.BILLING_CYCLES_FETCHED) {
+    return { ...state, list: action.payload.data }
   }
+
+  return state
 }
