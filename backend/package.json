@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "my-money-backend",
   "version": "1.0.0",
   "description": "Backend of project My Money APP",
   "main": "src/loader.js",
