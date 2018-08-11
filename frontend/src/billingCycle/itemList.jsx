@@ -5,7 +5,9 @@ import { Field, arrayInsert, arrayRemove } from 'redux-form'
 import Grid from '../common/layout/grid'
 import Input from '../common/form/input'
 import If from '../common/operador/if'
+import ComboBox from '../common/form/comboBox'
 
+const options = [{value: "PAGO", label: "Pago"}, {value: "PENDENTE", label: "Pendente"}]
 class ItemList extends Component {
 
   add(index, item = {}) {
@@ -34,9 +36,9 @@ class ItemList extends Component {
             placeholder='Informe o valor' readOnly={this.props.readOnly} />
         </td>
         <If test={this.props.showStatus}>
-          <td>
-            <Field name={`${this.props.field}[${index}].status`}  component={Input} 
-              placeholder='Informe o status' readOnly={this.props.readOnly} />       
+          <td className="col-md-3">
+            <Field name={`${this.props.field}[${index}].status`}  component={ComboBox}
+              placeholder='Informe o status' readOnly={this.props.readOnly} options={options} />       
           </td>
         </If>
         <td>
