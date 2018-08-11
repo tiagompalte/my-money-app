@@ -40,7 +40,7 @@ Esse projeto é uma aplicação de controle financeiro feito em React. Backend c
 
 *OBS.: o backend irá rodar na porta 3003*
 
-* Acesse a pasta do frontend (escolha com e sem redux)
+* Acesse a pasta do frontend
 
 `cd my-money-app/frontend/`
 
